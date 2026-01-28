@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monu Sharma | Mobile Application Developer</title>
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --primary: #2563eb;       /* Classic Blue */
+            --primary-dark: #1e40af;
+            --accent: #f59e0b;        /* Soft Amber for highlights */
+            --bg-body: #f8fafc;       /* Light Grey-Blue tint */
+            --bg-card: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --shadow: 0 10px 30px -10px rgba(0,0,0,0.1);
+            --radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .animate-up { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+
+        /* --- LAYOUT --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        section { padding: 80px 0; }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%);
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero-content { z-index: 2; }
+
+        .profile-img-wrapper {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 30px;
+            padding: 5px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        h1 { font-size: 3.5rem; margin-bottom: 10px; color: var(--text-main); letter-spacing: -1px; }
+        .role { font-size: 1.5rem; color: var(--primary); font-weight: 500; margin-bottom: 20px; }
+        .tagline { color: var(--text-muted); max-width: 600px; margin: 0 auto 40px; }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+        .btn:hover { background: var(--primary-dark); transform: translateY(-2px); }
+
+        /* --- SKILLS --- */
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .skill-tag {
+            background: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            font-weight: 500;
+            color: var(--text-main);
+            border: 1px solid #e2e8f0;
+            transition: var(--transition);
+        }
+        .skill-tag:hover { border-color: var(--primary); color: var(--primary); }
+
+        /* --- PROJECTS SECTION --- */
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            border: 1px solid #f1f5f9;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.15);
+        }
+
+        .card-header {
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: linear-gradient(to bottom right, #f8fafc, #fff);
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .app-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            object-fit: cover;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .card-title h3 { font-size: 1.4rem; margin-bottom: 5px; }
+        .card-title span { font-size: 0.9rem; color: var(--primary); font-weight: 600; background: #eff6ff; padding: 4px 10px; border-radius: 20px; }
+
+        .card-body { padding: 30px; }
+        .card-body p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; }
+        
+        .tech-stack { font-size: 0.85rem; color: var(--text-muted); display: flex; flex-wrap: wrap; gap: 8px; }
+        .tech-pill { background: #f1f5f9; padding: 4px 12px; border-radius: 6px; }
+
+        .wip-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+        }
+
+        /* --- MODAL --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            display: none; /* Hidden by default */
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 900px;
+            max-height: 90vh;
+            border-radius: 20px;
+            overflow-y: auto;
+            position: relative;
+            animation: scaleIn 0.3s ease-out;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #f1f5f9;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: var(--transition);
+        }
+        .close-btn:hover { background: #e2e8f0; }
+
+        .modal-header { padding: 40px 40px 20px; }
+        .modal-body { padding: 0 40px 40px; }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .gallery img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: var(--transition);
+        }
+        .gallery img:hover { transform: scale(1.02); }
+
+        .modal-links { margin-top: 30px; }
+        .modal-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--text-main);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        /* Contact Footer */
+        footer { background: white; border-top: 1px solid #e2e8f0; text-align: center; padding: 40px 0; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .hero-content { padding: 0 20px; }
+            .modal-header, .modal-body { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="profile-img-wrapper animate-up">
+                <img src="profile.jpg" alt="Monu Sharma" class="profile-img">
+            </div>
+            <h1 class="animate-up delay-1">Monu Sharma</h1>
+            <div class="role animate-up delay-2">Mobile Application Developer</div>
+            <p class="tagline animate-up delay-2">
+                Specializing in Android Native (Kotlin), Flutter, and React Native. 
+                Building scalable digital solutions for India's leading government platforms including DigiLocker, UX4G, and NCS.
+            </p>
+            
+            <div class="skills-grid animate-up delay-3">
+                <span class="skill-tag">Kotlin</span>
+                <span class="skill-tag">Flutter</span>
+                <span class="skill-tag">React Native</span>
+                <span class="skill-tag">Jetpack Compose</span>
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">MVVM</span>
+                <span class="skill-tag">Dagger-HILT</span>
+                <span class="skill-tag">RoomDB</span>
+            </div>
+
+            <div style="margin-top: 40px;" class="animate-up delay-3">
+                <a href="#projects" class="btn">View My Work</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid" id="projectsContainer">
+                </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <h3>Get In Touch</h3>
+            <p style="color: var(--text-muted); margin: 10px 0 20px;">Open to opportunities in Mobile Development.</p>
+            <a href="mailto:monu40128@gmail.com" class="btn">Contact Me</a>
+            <div style="margin-top: 30px; color: #94a3b8; font-size: 0.9rem;">
+                &copy; 2026 Monu Sharma. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="projectModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            <div class="modal-header">
+                <h2 id="modalTitle" style="font-size: 2rem; margin-bottom: 10px;">Project Title</h2>
+                <span id="modalTech" style="color: var(--primary); font-weight: 600;">Tech Stack</span>
+            </div>
+            <div class="modal-body">
+                <p id="modalDesc" style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.8;">
+                    Description goes here.
+                </p>
+                <div class="modal-links" id="modalLinkContainer">
+                    </div>
+                <div class="gallery" id="modalGallery">
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA SOURCE ---
+        const projects = [
+            {
+                id: 1,
+                title: "National Career Service (NCS)",
+                role: "React Native Developer",
+                icon: "ncs-logo.png",
+                tech: ["React Native", "DigiLocker Integration", "Job Search Algorithms"],
+                shortDesc: "A comprehensive job application platform for private and government sectors.",
+                fullDesc: "Developed and maintained the official NCS mobile app using React Native. Implemented advanced job search features, profile-based recommendations, and dynamic job filters. Key contribution included secure user authentication via DigiLocker login integration to verify user data authentically.",
+                images: ["ncs-home.png", "ncs-splash.png", "ncs-login.png"],
+                link: "https://play.google.com/store/search?q=national+career+services+app&c=apps&hl=en_IN",
+                status: "Live"
+            },
+            {
+                id: 2,
+                title: "National Book Trust (NBT)",
+                role: "Android Kotlin Developer",
+                icon: "nbt-logo.png",
+                tech: ["Kotlin", "PDF Rendering", "Paytm Gateway", "E-commerce"],
+                shortDesc: "Online book purchasing and digital reading application.",
+                fullDesc: "Built an end-to-end e-commerce experience for the National Book Trust. Features include browsing, purchasing, and a custom PDF reading engine with bookmarking and resume-reading functionality. Integrated Paytm Payment Gateway for secure transactions.",
+                images: [], // No extra screens provided, will just show description
+                link: "https://play.google.com/store/apps/details?id=com.nbt.bookreader&pcampaignid=web_share",
+                status: "Live"
+            },
+            {
+                id: 3,
+                title: "UNL (Lottery & POS)",
+                role: "Java & Kotlin Developer",
+                icon: "unl-logo.png",
+                tech: ["Java", "Kotlin", "Sunmi SDK", "Printing Hardware"],
+                shortDesc: "Android application for Sunmi POS devices managing lottery sales.",
+                fullDesc: "Managed maintenance and enhancements for a POS-based lottery sales application. Integrated hardware-specific SDKs (Sunmi) to handle thermal printing of transaction receipts and scanning functionality. Ensured high stability for financial transactions.",
+                images: ["unl-page.jpeg", "unl-statement.png"],
+                link: "#",
+                status: "Live"
+            },
+            {
+                id: 4,
+                title: "EPFO Mobile App",
+                role: "React Native & Android",
+                icon: "https://cdn-icons-png.flaticon.com/512/2534/2534183.png", // Placeholder Icon
+                tech: ["React Native", "AES Encryption", "Python"],
+                shortDesc: "Secure PF management system for claiming withdrawals and transfers.",
+                fullDesc: "Developing core functionalities enabling users to securely view passbooks and manage PF accounts. Implemented end-to-end workflows for claim submissions (withdrawal, transfer) and AES encryption for secure API communication. (Currently Under Progress)",
+                images: [],
+                link: "#",
+                status: "In Progress"
+            },
+            {
+                id: 5,
+                title: "UX4G Design System",
+                role: "Flutter Developer",
+                icon: "https://cdn-icons-png.flaticon.com/512/7542/7542190.png", // Placeholder Icon
+                tech: ["Flutter", "Design System", "Reusable Components"],
+                shortDesc: "A mobile design system for MeitY enabling dynamic theming.",
+                fullDesc: "Developing the UX4G Project, a scalable mobile design system for the Ministry of Electronics and Information Technology (MeitY). It enables fully dynamic theming, typography, and reusable UI components across various government mobile applications.",
+                images: [],
+                link: "#",
+                status: "Live"
+            }
+        ];
+
+        // --- RENDER FUNCTIONS ---
+        const projectsContainer = document.getElementById('projectsContainer');
+        const modal = document.getElementById('projectModal');
+
+        function renderProjects() {
+            projectsContainer.innerHTML = projects.map((project, index) => `
+                <div class="project-card animate-up" style="animation-delay: ${index * 0.1}s" onclick="openModal(${project.id})">
+                    <div class="card-header">
+                        <img src="${project.icon}" alt="${project.title}" class="app-icon" onerror="this.src='https://via.placeholder.com/70?text=App'">
+                        <div class="card-title">
+                            <h3>${project.title}</h3>
+                            <span>${project.role}</span>
+                        </div>
+                        ${project.status === 'In Progress' ? '<span class="wip-badge">In Progress</span>' : ''}
+                    </div>
+                    <div class="card-body">
+                        <p>${project.shortDesc}</p>
+                        <div class="tech-stack">
+                            ${project.tech.map(t => `<span class="tech-pill">${t}</span>`).join('')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openModal(id) {
+            const project = projects.find(p => p.id === id);
+            if (!project) return;
+
+            document.getElementById('modalTitle').innerText = project.title;
+            document.getElementById('modalTech').innerText = project.tech.join(' • ');
+            document.getElementById('modalDesc').innerText = project.fullDesc;
+            
+            // Handle Link
+            const linkContainer = document.getElementById('modalLinkContainer');
+            if (project.link && project.link !== "#") {
+                linkContainer.innerHTML = `<a href="${project.link}" target="_blank">View on Play Store &rarr;</a>`;
+            } else {
+                linkContainer.innerHTML = '';
+            }
+
+            // Handle Gallery
+            const gallery = document.getElementById('modalGallery');
+            if (project.images.length > 0) {
+                gallery.innerHTML = project.images.map(img => 
+                    `<img src="${img}" alt="Screenshot of ${project.title}">`
+                ).join('');
+            } else {
+                gallery.innerHTML = '';
+            }
+
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        // Close modal on clicking outside
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Initialize
+        renderProjects();
+
+    </script>
+</body>
+</html>
